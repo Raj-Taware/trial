@@ -76,6 +76,17 @@ three   186.6 kB gzip   ← deferred
 The shader caps device pixel ratio at 1.75 and pauses entirely when
 off-screen or when the tab is hidden.
 
+## Deployment
+
+Pushing to `claude/portfolio-ui-design-bg8qnn` builds and publishes to GitHub
+Pages via `.github/workflows/deploy.yml`. The typecheck runs as part of
+`npm run build`, so a type error fails the deploy rather than shipping a
+broken page.
+
+Pages must be enabled once, by hand: **Settings → Pages → Source: GitHub
+Actions**. The build uses `base: './'`, so the same output works at the Pages
+project subpath, at a domain root, and from `npm run preview`.
+
 ## Running it
 
 ```bash
