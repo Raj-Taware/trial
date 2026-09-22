@@ -1,0 +1,112 @@
+@import "tailwindcss";
+
+@theme {
+  --font-display: "Inter Tight", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, monospace;
+
+  /* Ink scale — the page is built on near-black, never pure black,
+     so the WebGL layers have somewhere to sit. */
+  --color-ink-900: #060608;
+  --color-ink-800: #0b0b10;
+  --color-ink-700: #14141c;
+  --color-ink-500: #2a2a36;
+  --color-ink-300: #6f6f80;
+  --color-ink-100: #e8e8ea;
+
+  /* Two accents: molten (warm) and ion (cool). Every project gets one
+     of these as its bleed colour. */
+  --color-flare: #ff5a2b;
+  --color-ion: #4d7cff;
+
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@layer base {
+  html {
+    /* Lenis drives scrolling; the native smooth behaviour would fight it. */
+    scroll-behavior: auto;
+  }
+
+  body {
+    background-color: var(--color-ink-900);
+    color: var(--color-ink-100);
+    font-family: var(--font-display);
+    overflow-x: clip;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  ::selection {
+    background-color: var(--color-flare);
+    color: var(--color-ink-900);
+  }
+
+  /* Keyboard users must always be able to see where they are, even
+     though the custom cursor hides the native one. */
+  :focus-visible {
+    outline: 2px solid var(--color-flare);
+    outline-offset: 4px;
+  }
+}
+
+@layer utilities {
+  /* Display type is set tight and optically aligned — at these sizes the
+     default tracking reads as loose. */
+  .text-display {
+    font-weight: 600;
+    letter-spacing: -0.045em;
+    line-height: 0.88;
+    text-wrap: balance;
+  }
+
+  .text-label {
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    font-weight: 400;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--color-ink-300);
+  }
+
+  /* Used by every SplitText reveal: lines slide out from behind a mask
+     rather than fading, which reads as physical instead of digital. */
+  .mask-line {
+    display: block;
+    overflow: hidden;
+    padding-bottom: 0.12em;
+    margin-bottom: -0.12em;
+  }
+
+  .film-grain::after {
+    content: "";
+    position: absolute;
+    inset: -50%;
+    pointer-events: none;
+    opacity: 0.035;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E");
+    animation: grain 6s steps(6) infinite;
+  }
+
+  @keyframes grain {
+    0%, 100% { transform: translate(0, 0); }
+    20% { transform: translate(-3%, 2%); }
+    40% { transform: translate(2%, -3%); }
+    60% { transform: translate(-2%, -2%); }
+    80% { transform: translate(3%, 1%); }
+  }
+}
+
+/* The entire motion system collapses to opacity-only when the visitor has
+   asked for less motion. This is the non-negotiable path. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+
+  .film-grain::after {
+    animation: none;
+  }
+}
