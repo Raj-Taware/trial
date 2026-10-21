@@ -9,6 +9,7 @@ import { Hero } from "./components/sections/Hero"
 import { Manifesto } from "./components/sections/Manifesto"
 import { Work } from "./components/sections/Work"
 import { Capabilities } from "./components/sections/Capabilities"
+import { Trajectory } from "./components/sections/Trajectory"
 import { Contact } from "./components/sections/Contact"
 
 export default function App() {
@@ -45,6 +46,7 @@ export default function App() {
         <Manifesto />
         <Work />
         <Capabilities />
+        <Trajectory />
         <Contact />
       </main>
     </>

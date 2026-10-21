@@ -6,7 +6,7 @@ const VantaLayer = lazy(() =>
   import("../webgl/VantaLayer").then((m) => ({ default: m.VantaLayer })),
 )
 import { SplitReveal } from "../text/SplitReveal"
-import { identity, socials } from "../../content/site"
+import { identity, socials, headings } from "../../content/site"
 
 /**
  * Act III. Everything quiets down.
@@ -40,7 +40,7 @@ export function Contact() {
           as="p"
           className="text-display mb-12 max-w-2xl text-[clamp(1.5rem,3vw,2.5rem)] text-ink-300"
         >
-          If any of this is the kind of thing you need built, say so.
+          {headings.contactLead}
         </SplitReveal>
 
         <MagneticLink href={`mailto:${identity.email}`}>

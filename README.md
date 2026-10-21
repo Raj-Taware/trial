@@ -1,12 +1,13 @@
-# Portfolio — "The Scroll Is The Timeline"
+# Raj Taware — Portfolio
 
 A single-page portfolio built as one continuous shot rather than a stack of
 sections. Scrolling doesn't move down a document; it travels through a
-four-act sequence.
+five-act sequence.
 
-> **Every string in `src/content/site.ts` is a placeholder.** Nothing in this
-> repository describes a real person or a real project. Replace that file
-> before the site goes anywhere near a visitor.
+All copy lives in `src/content/site.ts` and nowhere else. Every figure in it
+comes from the CV or from the public repository it describes — a project with
+no published number carries no metric rather than an invented one, and only
+public repositories are linked.
 
 ## The structure
 
@@ -14,8 +15,9 @@ four-act sequence.
 | --- | --- | --- |
 | Arrival | `Hero` | One declarative line over a hand-written GLSL field. No hero image, no buttons above the fold. |
 | Thesis | `Manifesto` | The section pins and the wheel becomes a scrubber — one phrase at a time. This teaches the site's grammar. |
-| Work | `Work` | Projects pass horizontally while pinned, like a dolly shot. The focused project bleeds its accent into a site-wide CSS variable. |
+| Research | `Work` | Projects pass horizontally while pinned, like a dolly shot. The focused project bleeds its accent into a site-wide CSS variable. |
 | Craft | `Capabilities` | A velocity-reactive marquee, then tilt-and-glare cards. |
+| Trajectory | `Trajectory` | Roles and study as one descending rule. Deliberately the quietest section — this is the part a reader scans. |
 | Invitation | `Contact` | Everything quiets down to one address. The contrast is the payoff. |
 
 The chapter rail on the right is both the read-progress indicator and the
@@ -53,8 +55,8 @@ This is a requirement, not a toggle.
 
 - `prefers-reduced-motion: reduce` removes Lenis entirely, drops the preloader
   and custom cursor, unpins every section, and renders the manifesto and work
-  as ordinary readable stacks. Verified: all 4 phrases, 4 projects and 4
-  capability cards are present and visible.
+  as ordinary readable stacks. Verified: all 4 phrases, 5 projects, 5 roles and
+  4 capability cards present and visible.
 - The hero shader renders **one still frame** rather than being removed —
   the artwork survives, the motion does not.
 - Count-ups and scramble text render their final values in the DOM from the
@@ -96,16 +98,24 @@ npm run build
 npm run preview
 ```
 
-## Making it yours
+## Editing it
 
-1. Rewrite `src/content/site.ts`. It holds every string, project, metric and
-   link on the site. Components read from it and contain no copy.
-2. Update the metadata and `<noscript>` address in `index.html`.
-3. Adjust the two accents (`--color-flare`, `--color-ion`) in `src/index.css`.
-   They propagate to the shader ramp, the chapter rail, the card borders and
+1. `src/content/site.ts` holds every string, project, metric, role and link.
+   Components read from it and contain no copy of their own.
+2. `index.html` carries the page metadata and the `<noscript>` fallback.
+3. The two accents (`--color-flare`, `--color-ion`) live in `src/index.css`
+   and propagate to the shader ramp, the chapter rail, the card borders and
    the per-project colour bleed.
 4. Projects with `accent: "ion"` tint the page blue while focused; `"flare"`
-   tints it orange. Alternating them is what gives the work section rhythm.
+   tints it orange. Alternating them is what gives the research section rhythm.
+
+### Rules the content follows
+
+- A project's `metric` is optional. Omit it rather than publish a figure that
+  cannot be traced to the CV or the repository.
+- A project's `href` is optional too. Unpublished work renders as plain text
+  with its `status` (e.g. "Under review") instead of a link that 404s.
+- Only public repositories are linked. This site is itself public.
 
 ## Known trade-offs
 

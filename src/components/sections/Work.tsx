@@ -2,7 +2,7 @@ import { useEffect, useRef } from "react"
 import { gsap, ScrollTrigger } from "../../lib/gsap"
 import { useReducedMotion } from "../../lib/useReducedMotion"
 import { CountUp } from "../text/CountUp"
-import { projects, type Project } from "../../content/site"
+import { projects, headings, type Project } from "../../content/site"
 
 /**
  * Act II. The work passes horizontally while the section is pinned — a dolly
@@ -82,7 +82,7 @@ export function Work() {
   if (reduced) {
     return (
       <section id="work" className="mx-auto max-w-5xl space-y-24 px-6 py-32">
-        <h2 className="text-label">Selected Work</h2>
+        <h2 className="text-label">{headings.work}</h2>
         {projects.map((project) => (
           <ProjectPanel key={project.id} project={project} />
         ))}
@@ -92,7 +92,7 @@ export function Work() {
 
   return (
     <section id="work" ref={sectionRef} className="relative h-svh overflow-hidden">
-      <h2 className="text-label absolute top-8 left-6 z-20 md:left-10">Selected Work</h2>
+      <h2 className="text-label absolute top-8 left-6 z-20 md:left-10">{headings.work}</h2>
 
       <div ref={trackRef} className="flex h-full w-max items-center will-change-transform">
         {projects.map((project) => (
@@ -109,7 +109,7 @@ export function Work() {
         {/* A closing panel stops the last project from sitting against the edge. */}
         <div className="grid h-full w-[40vw] shrink-0 place-items-center px-14">
           <p className="text-display text-[clamp(1.5rem,3vw,2.5rem)] text-ink-300">
-            More on request.
+            {headings.workCoda}
           </p>
         </div>
       </div>
@@ -126,29 +126,34 @@ function ProjectPanel({ project }: { project: Project }) {
         <span className="text-label">{project.year}</span>
       </div>
 
-      <a
-        href={project.href}
-        data-cursor="view"
-        className="group block"
-      >
-        <h3 className="text-display text-[clamp(2.25rem,6vw,5rem)] transition-colors duration-500 group-hover:text-[var(--bleed,var(--color-flare))]">
-          {project.title}
-        </h3>
-      </a>
+      {project.href ? (
+        <a href={project.href} target="_blank" rel="noreferrer" data-cursor="view" className="group block">
+          <h3 className="text-display text-[clamp(2.25rem,6vw,5rem)] transition-colors duration-500 group-hover:text-[var(--bleed,var(--color-flare))]">
+            {project.title}
+          </h3>
+        </a>
+      ) : (
+        <h3 className="text-display text-[clamp(2.25rem,6vw,5rem)]">{project.title}</h3>
+      )}
+
+      {project.status && <p className="text-label mt-4">{project.status}</p>}
 
       <p className="mt-6 max-w-[46ch] text-base leading-relaxed text-ink-300 md:text-lg">
         {project.summary}
       </p>
 
       <div className="mt-10 flex flex-wrap items-end gap-x-12 gap-y-6">
-        <div>
-          <CountUp
-            value={project.metric.value}
-            suffix={project.metric.suffix}
-            className="text-display block text-[clamp(2rem,4vw,3.25rem)] text-[var(--bleed,var(--color-flare))] tabular-nums"
-          />
-          <span className="text-label mt-2 block">{project.metric.label}</span>
-        </div>
+        {project.metric && (
+          <div className="max-w-[26ch]">
+            <CountUp
+              value={project.metric.value}
+              suffix={project.metric.suffix}
+              decimals={project.metric.decimals}
+              className="text-display block text-[clamp(2rem,4vw,3.25rem)] text-[var(--bleed,var(--color-flare))] tabular-nums"
+            />
+            <span className="text-label mt-2 block">{project.metric.label}</span>
+          </div>
+        )}
 
         <div>
           <span className="text-label mb-2 block">Role</span>

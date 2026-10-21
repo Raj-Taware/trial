@@ -3,7 +3,7 @@ import { gsap } from "../../lib/gsap"
 import { useReducedMotion } from "../../lib/useReducedMotion"
 import { SplitReveal } from "../text/SplitReveal"
 import { VelocityMarquee } from "../text/VelocityMarquee"
-import { capabilities, marqueeWords } from "../../content/site"
+import { capabilities, marqueeWords, headings } from "../../content/site"
 
 /**
  * Act II coda. Tilt-and-glare cards, in the react-bits spirit but rebuilt so
@@ -22,7 +22,7 @@ export function Capabilities() {
           as="h2"
           className="text-display mb-16 max-w-3xl text-[clamp(1.75rem,4vw,3.25rem)]"
         >
-          What I actually do when the motion stops.
+          {headings.capabilities}
         </SplitReveal>
 
         <div className="grid gap-4 sm:grid-cols-2">
